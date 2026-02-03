@@ -6,8 +6,9 @@ export const env = createEnv({
     DB_PASSWORD: z.string().min(1),
     DB_USER: z.string().min(1),
     DB_NAME: z.string().min(1),
-    // DB_HOST: z.string().min(1),
+    DB_HOST: z.string().min(1),
     DATABASE_URL: z.url(),
+    REDIS_URL: z.string().min(1),
   },
   experimental__runtimeEnv: process.env,
 });
