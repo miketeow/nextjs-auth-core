@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/auth/nextjs/currentUser";
+import { getCurrentUser } from "@/auth/nextjs/current-user";
 import LogOutButton from "@/auth/nextjs/log-out-button";
 import { Button } from "@/components/ui/button";
 import {
