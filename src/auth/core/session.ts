@@ -41,6 +41,10 @@ export async function createUserSession(
     SESSION_EXPIRATION_SECONDS,
   );
 
+  setCookie(sessionId, cookies);
+}
+
+function setCookie(sessionId: string, cookies: Pick<Cookies, "set">) {
   cookies.set(COOKIE_SESSION_KEY, sessionId, {
     secure: true,
     httpOnly: true,
@@ -78,4 +82,42 @@ export async function removeUserFromSession(
 
   await redis.del(`session:${sessionId}`);
   cookies.delete(COOKIE_SESSION_KEY);
+}
+
+export async function updateUserSessionData(
+  user: UserSession,
+  cookies: Pick<Cookies, "get">,
+) {
+  const sessionId = cookies.get(COOKIE_SESSION_KEY)?.value;
+
+  if (sessionId == null) return null;
+
+  const sessionData = JSON.stringify(sessionSchema.parse(user));
+  await redis.set(
+    `session:${sessionId}`,
+    sessionData,
+    "EX",
+    SESSION_EXPIRATION_SECONDS,
+  );
+}
+
+export async function updateUserSessionExpiration(cookies: Cookies) {
+  // Get session from cookies
+  const sessionId = cookies.get(COOKIE_SESSION_KEY)?.value;
+  if (sessionId == null) return null;
+
+  const result = await redis.expire(
+    `session:${sessionId}`,
+    SESSION_EXPIRATION_SECONDS,
+  );
+  if (result === 0) {
+    // Session didn't exist in Redis, maybe expired between requests
+    // Should treat it as logged out, and delete the cookies
+    console.log("session id not found");
+    // Optional, consider to delete cookie if session is gone
+    cookies.delete(COOKIE_SESSION_KEY);
+    return null;
+  }
+
+  setCookie(sessionId, cookies);
 }
