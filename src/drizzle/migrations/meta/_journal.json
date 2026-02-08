@@ -8,6 +8,13 @@
       "when": 1769674880730,
       "tag": "0000_thin_human_robot",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1770302513413,
+      "tag": "0001_silky_pixie",
+      "breakpoints": true
     }
   ]
 }

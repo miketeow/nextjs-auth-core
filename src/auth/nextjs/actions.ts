@@ -2,7 +2,7 @@
 import { db } from "@/drizzle/db";
 import { signInSchema, signUpSchema } from "../schema";
 import { eq } from "drizzle-orm";
-import { UserTable } from "@/drizzle/schema";
+import { OAuthProvider, UserTable } from "@/drizzle/schema";
 import {
   comparePasswords,
   generateSalt,
@@ -12,6 +12,7 @@ import { redirect } from "next/navigation";
 import z from "zod";
 import { createUserSession, removeUserFromSession } from "../core/session";
 import { cookies } from "next/headers";
+import { OAuthClient } from "../core/oauth/base";
 
 export async function signUp(unsafeData: z.infer<typeof signUpSchema>) {
   const { success, data } = signUpSchema.safeParse(unsafeData);
@@ -77,4 +78,10 @@ export async function signIn(unsafeData: z.infer<typeof signInSchema>) {
 export async function logOut() {
   await removeUserFromSession(await cookies());
   redirect("/");
+}
+
+export async function oAuthSignIn(provider: OAuthProvider) {
+  // get oauth url
+
+  redirect(new OAuthClient().createAuthUrl(await cookies()));
 }

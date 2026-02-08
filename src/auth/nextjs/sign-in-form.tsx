@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { signInSchema } from "../schema";
-import { signIn } from "./actions";
+import { oAuthSignIn, signIn } from "./actions";
 
 const SignInForm = () => {
   const [error, setError] = useState<string>();
@@ -41,7 +41,7 @@ const SignInForm = () => {
         <div className="flex gap-4">
           <Button
             type="button"
-            // onClick={async () => await oAuthSignIn("discord")}
+            onClick={async () => await oAuthSignIn("discord")}
           >
             Discord
           </Button>
