@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 
 export default async function Home() {
-  const user = await getCurrentUser();
+  const user = await getCurrentUser({ withFullUser: true });
   return (
     <div className="container mx-auto p-4">
       {user == null ? (
@@ -26,7 +26,7 @@ export default async function Home() {
       ) : (
         <Card className="max-w-125 mt-4">
           <CardHeader>
-            <CardTitle>User: {user.id}</CardTitle>
+            <CardTitle>User: {user.name}</CardTitle>
             <CardDescription>Role: {user.role}</CardDescription>
           </CardHeader>
           <CardFooter className="flex gap-4">

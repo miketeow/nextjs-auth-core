@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { signUpSchema } from "../schema";
-import { signUp } from "./actions";
+import { oAuthSignIn, signUp } from "./actions";
 
 export function SignUpForm() {
   const [error, setError] = useState<string>();
@@ -41,14 +41,14 @@ export function SignUpForm() {
         {error && <p className="text-destructive">{error}</p>}
         <div className="flex gap-4">
           <Button
-          // type="button"
-          // onClick={async () => await oAuthSignIn("discord")}
+            type="button"
+            onClick={async () => await oAuthSignIn("discord")}
           >
             Discord
           </Button>
           <Button
-          // type="button"
-          // onClick={async () => await oAuthSignIn("github")}
+            type="button"
+            onClick={async () => await oAuthSignIn("github")}
           >
             GitHub
           </Button>

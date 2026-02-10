@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 import z from "zod";
 import { createUserSession, removeUserFromSession } from "../core/session";
 import { cookies } from "next/headers";
-import { OAuthClient } from "../core/oauth/base";
+import { getOAuthClient } from "../core/oauth/base";
 
 export async function signUp(unsafeData: z.infer<typeof signUpSchema>) {
   const { success, data } = signUpSchema.safeParse(unsafeData);
@@ -81,7 +81,7 @@ export async function logOut() {
 }
 
 export async function oAuthSignIn(provider: OAuthProvider) {
-  // get oauth url
+  const oAuthClient = getOAuthClient(provider);
 
-  redirect(new OAuthClient().createAuthUrl(await cookies()));
+  redirect(oAuthClient.createAuthUrl(await cookies()));
 }

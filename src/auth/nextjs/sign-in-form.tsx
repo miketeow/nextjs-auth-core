@@ -47,7 +47,7 @@ const SignInForm = () => {
           </Button>
           <Button
             type="button"
-            // onClick={async () => await oAuthSignIn("github")}
+            onClick={async () => await oAuthSignIn("github")}
           >
             GitHub
           </Button>
