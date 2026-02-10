@@ -53,7 +53,7 @@ const SignInForm = () => {
           </Button>
           <Button
             type="button"
-            // onClick={async () => await oAuthSignIn("google")}
+            onClick={async () => await oAuthSignIn("google")}
           >
             Google
           </Button>
